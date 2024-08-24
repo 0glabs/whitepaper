@@ -7,9 +7,9 @@ Users pay \projabbrev tokens to create data entries in the log and add data to t
 The payment from users to miners is mediated by the \project consensus network,
 as the service is sustained by the whole network rather than any specific miner.
 
-\projabbrev Storage implements storage service in a ``pay once, storage forever'' manner.
-Users pay a one-shot storage endowment for each created data entry, and thereafter the endowment is used to incentivize miners who maintain that data entry.
-
+\projabbrev Storage implements storage service in a ``pay once for a fixed period of time'' manner.
+Users pay a storage endowment for each created data entry for a certain period of time, e.g., 3 years, and thereafter the endowment is used to incentivize miners who maintain that data entry by linear distribution. 
+Users can recharge to extend the storage period.
 
 The storage endowment is maintained per data entry,
 and a miner is only eligible for storage rewards from data entries that he has access to.
