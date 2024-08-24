@@ -267,35 +267,35 @@ Precisely, the mining process has the following steps:
 % \end{enumerate}
 
 
-\subsection{Mining Reward}
-\label{subsec:mining reward}
+%\subsection{Mining Reward}
+%\label{subsec:mining reward}
 
-\projabbrev Storage creates pricing segments every 8 GB of data chunks over the data flow. 
+%\projabbrev Storage creates pricing segments every 8 GB of data chunks over the data flow. 
 %
-Each pricing segment is associated with an \emph{Endowment Pool} and a \emph{Reward Pool}. 
+%Each pricing segment is associated with an \emph{Endowment Pool} and a \emph{Reward Pool}. 
 %
-The \emph{Endowment Pool} collects the storage endowments of all the data chunks belonging to this pricing segment and releases a fixed ratio of balance to the \emph{Reward Pool} every second. 
+%The \emph{Endowment Pool} collects the storage endowments of all the data chunks belonging to this pricing segment and releases a fixed ratio of balance to the \emph{Reward Pool} every second. 
 %
-The rate of reward release is set at 4\% per year. 
+%The rate of reward release is set at 4\% per year. 
 
 
-The mining reward is paid to miners for providing data service.
-Miners receive mining reward when submit the first legitimate {\sproof} for a mining epoch to \projabbrev Storage contract.
+%The mining reward is paid to miners for providing data service.
+%Miners receive mining reward when submit the first legitimate {\sproof} for a mining epoch to \projabbrev Storage contract.
 
-The mining reward consists of two parts:
-\begin{itemize}
-	\item {\bf Base reward}: the base reward, denoted by $R_{base}$, is paid for every accepted mining proof. The base reward per proof decreases over time.
+%The mining reward consists of two parts:
+%\begin{itemize}
+%	\item {\bf Base reward}: the base reward, denoted by $R_{base}$, is paid for every accepted mining proof. The base reward per proof decreases over time.
 
-	\item {\bf Storage reward}:  the storage reward, denoted by $R_{storage}$, is the perpetual reward from storing data. 
+%	\item {\bf Storage reward}:  the storage reward, denoted by $R_{storage}$, is the perpetual reward from storing data. 
 	%
-	When a {\sproof} falls in a pricing segment, half of the balance in its \emph{Reward Pool} is claimed as the storage reward. 
+%	When a {\sproof} falls in a pricing segment, half of the balance in its \emph{Reward Pool} is claimed as the storage reward. 
 
-\end{itemize}
+%\end{itemize}
 
-The total reward for a new mining proof is thus:
-\begin{align}
-	R_{total} = R_{base} + R_{storage}
-\end{align}
+%The total reward for a new mining proof is thus:
+%\begin{align}
+%	R_{total} = R_{base} + R_{storage}
+%\end{align}
 
 
 \subsection{How to Balance the Number of Replicas?}
