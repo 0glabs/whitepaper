@@ -3,8 +3,8 @@
 \section{Incentive Mechanism}
 
 This section describes the incentive mechanism design of the \projabbrev Storage, which consists of two types of actors: users and miners (a.k.a. "storage nodes").
-Users pay tokens (\token) to create data entries in the log and add data to the network, while miners provide data services and receive tokens (\token) as a reward from the network.
-The payment from users to miners is mediated by the \project network,
+Users pay \projabbrev tokens to create data entries in the log and add data to the network, while miners provide data services and receive \projabbrev tokens as a reward from the network.
+The payment from users to miners is mediated by the \project consensus network,
 as the service is sustained by the whole network rather than any specific miner.
 
 \projabbrev Storage implements storage service in a ``pay once, storage forever'' manner.
@@ -314,53 +314,53 @@ miners are incentivized to store rare data and hence balance the number of repli
 
 
 
-\subsection{How to Incentivize Data Sharing?}
+%\subsection{How to Incentivize Data Sharing?}
 
-In a storage network, storing data can be easily incentivized by relating the mining reward to storage size, whereas sharing is much less incentivized as the communication of data must happen outside consensus. 
-Therefore, a rational node would prefer to share nothing to save bandwidth and power expenses.
-One might suggest using a mechanism similar to the BitTorrent network, where each node maintains a local ranking of its peers and refuses to share data with leechers.
-However, such a mechanism is far from optimal due to the mismatch between willingness and capability. This is especially so for a storage network as a newcomer cannot quickly bootstrap (they have nothing to share), whereas a powerful node with sufficient data has much less incentive to increase its ranking score.
+%In a storage network, storing data can be easily incentivized by relating the mining reward to storage size, whereas sharing is much less incentivized as the communication of data must happen outside consensus. 
+%Therefore, a rational node would prefer to share nothing to save bandwidth and power expenses.
+%One might suggest using a mechanism similar to the BitTorrent network, where each node maintains a local ranking of its peers and refuses to share data with leechers.
+%However, such a mechanism is far from optimal due to the mismatch between willingness and capability. This is especially so for a storage network as a newcomer cannot quickly bootstrap (they have nothing to share), whereas a powerful node with sufficient data has much less incentive to increase its ranking score.
 
-\projabbrev Storage introduces a built-in royalty mechanism to incentivize data-sharing behavior.
-The royalty mechanism allows a storage node to receive dividends 
-from the data it shares with others 
-when a new mining proof is mined based on the shared data.
-Thus, storage nodes have a clear incentive to share data with others, and newcomers get a better kick-start.
+%\projabbrev Storage introduces a built-in royalty mechanism to incentivize data-sharing behavior.
+%The royalty mechanism allows a storage node to receive dividends 
+%from the data it shares with others 
+%when a new mining proof is mined based on the shared data.
+%Thus, storage nodes have a clear incentive to share data with others, and newcomers get a better kick-start.
 
-The essence of the royalty mechanism is that data providers are rewarded only after the data is shared.
-Data sharing is hard to incentivize mainly because off-chain sharing behavior is not publicly observable.
-In particular, a third-party can hardly verify whether some node A sends specific data to another node B through an off-chain channel,
-especially when both of the two nodes could be lying.
-However, the \project loyalty mechanism bypasses the problem by switching to another observable event, \ie a new mining proof is generated based on the shared data.
-If the data sharing did not happen (e.g. the data provider ignored the request without sending data), then the requester would not be able to use that piece of data in its mining proof, and hence there is no reward for the unanswered data request.
-On the other hand, when the data is shared and by probability queried by the \sproof challenge, a rational miner will include it in the mining proof for a better payoff, which is positive even after deducting the dividends to the data provider.
+%The essence of the royalty mechanism is that data providers are rewarded only after the data is shared.
+%Data sharing is hard to incentivize mainly because off-chain sharing behavior is not publicly observable.
+%In particular, a third-party can hardly verify whether some node A sends specific data to another node B through an off-chain channel,
+%especially when both of the two nodes could be lying.
+%However, the \project loyalty mechanism bypasses the problem by switching to another observable event, \ie a new mining proof is generated based on the shared data.
+%If the data sharing did not happen (e.g. the data provider ignored the request without sending data), then the requester would not be able to use that piece of data in its mining proof, and hence there is no reward for the unanswered data request.
+%On the other hand, when the data is shared and by probability queried by the \sproof challenge, a rational miner will include it in the mining proof for a better payoff, which is positive even after deducting the dividends to the data provider.
 
-More specifically, the royalty mechanism works as follows:
-\begin{itemize}
- 	\item The data requester sends his request to the \projabbrev Storage contract to create a royalty record. Each royalty record includes the range of requested data entries, the designated data provider, and the length of the royalty period.
+%More specifically, the royalty mechanism works as follows:
+%\begin{itemize}
+% 	\item The data requester sends his request to the \projabbrev Storage contract to create a royalty record. Each royalty record includes the range of requested data entries, the designated data provider, and the length of the royalty period.
  	
- 	\item The data provider, when observing a new request on the host chain, decides on its own whether or not to send requested data to the requester.
+% 	\item The data provider, when observing a new request on the host chain, decides on its own whether or not to send requested data to the requester.
 
- 	\item When the requester submits a mining proof $\pi$, the \project contract checks for every \sproof challenge query $Q_i$  in $\pi$ whether $Q_i$ falls in the range of some valid royalty record.
- 	If yes, the data provider gets a certain fraction of the storage reward as a dividend.
+% 	\item When the requester submits a mining proof $\pi$, the \project contract checks for every \sproof challenge query $Q_i$  in $\pi$ whether $Q_i$ falls in the range of some valid royalty record.
+% 	If yes, the data provider gets a certain fraction of the storage reward as a dividend.
  	% \begin{itemize}
  	% 	\item If yes, then half of the corresponding storage reward $R_i$ as in \cref{eq:storage reward} will be assigned to the data provider, \ie each of the author of $\pi$ and the data provider gets $\frac{1}{2} R_i$.
 
  	% 	\item Otherwise the author of $\pi$ gets full storage reward $R_i$ for query $Q_i$.
  	% \end{itemize}
 
- 	\item Expired royalty records will be removed.
-\end{itemize}  
+% 	\item Expired royalty records will be removed.
+%\end{itemize}  
 
-As a result, data providers are incentivized to store and share data,
-and the expected royalty dividends are proportional to the amount of shared data.
-There is no incentive to forge sharing relations since the total storage reward $R_i$ is unchanged with or without data sharing royalty.
+%As a result, data providers are incentivized to store and share data,
+%and the expected royalty dividends are proportional to the amount of shared data.
+%There is no incentive to forge sharing relations since the total storage reward $R_i$ is unchanged with or without data sharing royalty.
 
-The expiration of royalty records is introduced for three reasons: a) in case a request is ignored, the requester can resubmit it to another data provider after the previous request expires;
-b) a permanent royalty record does not make sense in practice, since the requester can always open a new account and hence renders the record useless;
-c) cleaning expired royalty records reduces the overhead of maintaining royalty-sharing relations.
+%The expiration of royalty records is introduced for three reasons: a) in case a request is ignored, the requester can resubmit it to another data provider after the previous request expires;
+%b) a permanent royalty record does not make sense in practice, since the requester can always open a new account and hence renders the record useless;
+%c) cleaning expired royalty records reduces the overhead of maintaining royalty-sharing relations.
 
-Furthermore, the history of data sharing and royalty dividends can be observed onchain, which improves the effectiveness of credit ranking in the \projabbrev Storage network.
+%Furthermore, the history of data sharing and royalty dividends can be observed onchain, which improves the effectiveness of credit ranking in the \projabbrev Storage network.
 
 
 % \section{Fairness and Counter-Cheating}
